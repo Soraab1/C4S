@@ -8,6 +8,8 @@ class Program
 {
     static void Main()
     {
+        string logFilePath = "login_attempt.txt";
+
         // Declare and initialize 10 satellites with RNGs
         string[] satellites = new string[10];
         for (int i = 0; i < satellites.Length; i++)
@@ -33,6 +35,7 @@ class Program
         if (userInput == VirtualSatellite)
         {
             Console.WriteLine("Access Granted!\n");
+            LogAttempt(logFilePath, userInput, true); // Log successful attempt
 
             bool continueProgram = true;
             while (continueProgram)
@@ -92,6 +95,21 @@ class Program
         else
         {
             Console.WriteLine("Access Denied! Incorrect RNG.");
+            LogAttempt(logFilePath, userInput, false); // Log unsuccessful attempt
+        }
+    }
+
+    static void LogAttempt(string filePath, string rngAttempt, bool isSuccess)
+    {
+        try
+        {
+            string status = isSuccess ? "SUCCESSFUL" : "UNSUCCESSFUL";
+            string logMessage = $"{DateTime.Now}: {status} login attempt with RNG: {rngAttempt}{Environment.NewLine}";
+            File.AppendAllText(filePath, logMessage); // Append the log to the file
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to log attempt: {ex.Message}");
         }
     }
 
