@@ -34,49 +34,59 @@ class Program
         {
             Console.WriteLine("Access Granted!\n");
 
-            // Show menu options
-            Console.WriteLine("Choose an action:");
-            Console.WriteLine("1. Send a message to satellites.");
-            Console.WriteLine("2. Receive a message from a satellite.");
-            Console.Write("Enter your choice (1 or 2): ");
-            string choice = Console.ReadLine();
-
-            if (choice == "1")
+            bool continueProgram = true;
+            while (continueProgram)
             {
-                // Proceed with sending a message
-                string GroundTerminal1 = "", GroundTerminal2 = "", GroundTerminal3 = "", GroundTerminal4 = "", GroundTerminal5 = "";
-                Console.WriteLine("\nEnter a message to send through the Ground Terminals:");
-                string userMessage = Console.ReadLine();
+                // Show menu options
+                Console.WriteLine("Choose an action:");
+                Console.WriteLine("1. Send a message to satellites.");
+                Console.WriteLine("2. Receive a message from a satellite.");
+                Console.WriteLine("3. Exit the program.");
+                Console.Write("Enter your choice (1, 2, or 3): ");
+                string choice = Console.ReadLine();
 
-                List<Tuple<int, char>> scrambledMessage = ScrambleMessage(userMessage, ref GroundTerminal1, ref GroundTerminal2, ref GroundTerminal3, ref GroundTerminal4, ref GroundTerminal5);
-
-                Console.WriteLine("\nScrambled message across Ground Terminals:");
-                Console.WriteLine($"GroundTerminal1: {GroundTerminal1}");
-                Console.WriteLine($"GroundTerminal2: {GroundTerminal2}");
-                Console.WriteLine($"GroundTerminal3: {GroundTerminal3}");
-                Console.WriteLine($"GroundTerminal4: {GroundTerminal4}");
-                Console.WriteLine($"GroundTerminal5: {GroundTerminal5}");
-
-                string unscrambledMessage = UnscrambleMessage(scrambledMessage);
-                Console.WriteLine("\nUnscrambled message at VirtualSatellite:");
-                Console.WriteLine(unscrambledMessage);
-            }
-            else if (choice == "2")
-            {
-                // Receive a message from a satellite
-                Console.WriteLine("\nChoose a satellite to receive a message from (1-10):");
-                int satelliteIndex;
-                while (!int.TryParse(Console.ReadLine(), out satelliteIndex) || satelliteIndex < 1 || satelliteIndex > 10)
+                if (choice == "1")
                 {
-                    Console.WriteLine("Invalid input. Please enter a number between 1 and 10:");
-                }
+                    // Proceed with sending a message
+                    string GroundTerminal1 = "", GroundTerminal2 = "", GroundTerminal3 = "", GroundTerminal4 = "", GroundTerminal5 = "";
+                    Console.WriteLine("\nEnter a message to send through the Ground Terminals:");
+                    string userMessage = Console.ReadLine();
 
-                Console.WriteLine($"Receiving message from Sat{satelliteIndex}:");
-                Console.WriteLine("\"Test 1 2 3, this is a message from Cybersecurity for Space\"");
-            }
-            else
-            {
-                Console.WriteLine("Invalid choice. Exiting program.");
+                    List<Tuple<int, char>> scrambledMessage = ScrambleMessage(userMessage, ref GroundTerminal1, ref GroundTerminal2, ref GroundTerminal3, ref GroundTerminal4, ref GroundTerminal5);
+
+                    Console.WriteLine("\nScrambled message across Ground Terminals:");
+                    Console.WriteLine($"GroundTerminal1: {GroundTerminal1}");
+                    Console.WriteLine($"GroundTerminal2: {GroundTerminal2}");
+                    Console.WriteLine($"GroundTerminal3: {GroundTerminal3}");
+                    Console.WriteLine($"GroundTerminal4: {GroundTerminal4}");
+                    Console.WriteLine($"GroundTerminal5: {GroundTerminal5}");
+
+                    string unscrambledMessage = UnscrambleMessage(scrambledMessage);
+                    Console.WriteLine("\nUnscrambled message at VirtualSatellite:");
+                    Console.WriteLine(unscrambledMessage);
+                }
+                else if (choice == "2")
+                {
+                    // Receive a message from a satellite
+                    Console.WriteLine("\nChoose a satellite to receive a message from (1-10):");
+                    int satelliteIndex;
+                    while (!int.TryParse(Console.ReadLine(), out satelliteIndex) || satelliteIndex < 1 || satelliteIndex > 10)
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number between 1 and 10:");
+                    }
+
+                    Console.WriteLine($"Receiving message from Sat{satelliteIndex}:");
+                    Console.WriteLine("\"Test 1 2 3, this is a message from Cybersecurity for Space\"");
+                }
+                else if (choice == "3")
+                {
+                    Console.WriteLine("Exiting the program. Goodbye!");
+                    continueProgram = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
             }
         }
         else
